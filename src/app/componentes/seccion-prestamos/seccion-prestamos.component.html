@@ -1,0 +1,218 @@
+<div class="container mt-3" style="background-color: #e9f1fe">
+  <br />
+  <h2 align="center">Registrar Prestamo</h2>
+  <br />
+  <form action="/action_page.php" [formGroup]="myform">  <!-- el formulario se llama myform-->
+    <div class="mb-3 mt-3">
+      <label for="valor_prestamo">Valor prestamo:</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Ingresar Valor Prestamo"
+        formControlName="valor_prestamo"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="numero_cuotas">Numero cuotas:</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Ingresar Numero Cuota"
+        formControlName="num_cuotas"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="meses_plazo">Meses de plazo:</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Ingresar Meses Plazo"
+        formControlName="meses_plazo"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="fecha_inicio_prestamo">Fecha inicio prestamo:</label>
+      <input
+        type="datetime"
+        class="form-control"
+        placeholder="Ingresar Fecha Inicio Prestamo"
+        formControlName="fecha_inicio_prestamo"/>
+    </div>
+    <div class="mb-3">
+      <label for="fecha_final_prestamo">Fecha final prestamo:</label>
+      <input
+        type="datetime"
+        class="form-control"
+        placeholder="Ingresar Fecha Final Prestamo"
+        formControlName="fecha_final_prestamo"/>
+    </div>
+    <div class="mb-3">
+      <label for="intereses">Intereses:</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Ingresar Intereses"
+        formControlName="intereses"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="valor_total_prestamo">Valor total prestamo:</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Ingresar Total Prestamo"
+        formControlName="valor_final_prestamo"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="estado">Estado:</label>
+      <input
+        type="name"
+        class="form-control"
+        placeholder="Ingresar Estado"
+        formControlName="estado"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="id_cliente">Id cliente:</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Ingresar Id Cliente"
+        formControlName="id_cliente"
+      />
+    </div>
+    <br />
+    <div class="d-grid gap-2 col-3 mx-auto">
+      <button (click)="insertarPrestamo(myform.value)" class="btn btn-primary btn-lg" type="button">Registrar</button>
+    </div><br>
+    <div class="d-grid gap-2 col-3 mx-auto">
+      <button (click)="modificarCredito(myform.value)" class="btn btn-primary btn-lg" type="button">Editar</button>
+    </div>
+    <br />
+    <br />
+  </form>
+</div>
+<br />
+<br />
+<hr />
+<br />
+<br />
+<div class="container mt-3" style="background-color: #e9f1fe">
+  <br />
+  <br />
+  <div class="row">
+    <h2 class="col-lg-6">Consultar Prestamo</h2>
+    <div class="col-lg-4">
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Ingresar id prestamo"
+        formControlName="id_prestamo"
+      />
+    </div>
+    <div class="col-lg-2">
+      <button class="btn btn-primary btn-lg" type="button">Consultar</button>
+    </div>
+    <br />
+    <br />
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id prestamo</th>
+        <th>Valor prestamo</th>
+        <th>Numero cuotas</th>
+        <th>Plazo meses</th>
+        <th>Fecha inicio prestamo</th>
+        <th>Fecha final prestamo</th>
+        <th>Intereses</th>
+        <th>Valor total prestamo</th>
+        <th>Estado</th>
+        <th>Id cliente</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pre of lista_prestamos">
+        <td> {{pre.id_prestamo}} </td>
+        <td> {{pre.valor_prestamo}} </td>
+        <td> {{pre.num_cuotas}} </td>
+        <td> {{pre.meses_plazo}} </td>
+        <td> {{pre.fecha_inicio_prestamo}} </td>
+        <td> {{pre.fecha_final_prestamo}} </td>
+        <td> {{pre.intereses}} </td>
+        <td> {{pre.valor_final_prestamo}} </td>
+        <td> {{pre.estado}} </td>
+        <td> {{pre.id_cliente}} </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            (click)="seleccionarCredito(pre)"
+          >
+            Seleccionar
+          </button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-outline-danger"
+          (click)="eliminarCredito(pre.id_prestamo)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+</div>
+<br />
+<br />
+<hr />
+<br />
+<br />
+<div class="container mt-3" style="background-color: #e9f1fe">
+  <br />
+  <br />
+  <div class="row">
+    <h2 class="col-lg-10">Consultar valor de cuota</h2>
+
+    <div class="col-lg-2">
+      <button class="btn btn-primary btn-lg" type="button">Consultar
+
+      </button>
+    </div>
+    <br />
+    <br />
+  </div>
+  <form>
+    <div class="mb-3 mt-3">
+      <label for="valor_prestamo">Valor Prestamo:</label>
+      <input
+        type="number"
+        class="form-control"
+        id="valor_prestamo"
+        placeholder="Ingresar Valor Prestamo"
+        formControlName="valor_prestamo"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="numero_cuota">Numero cuotas:</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Ingresar Numero Cuotas"
+        formControlName="num_cuotas"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="estado">Total:</label>
+      <input
+        type="name"
+        class="form-control"
+        placeholder="Total de valor de cuotas"
+        formControlName="valor_final_prestamo"
+      />
+    </div>
+  </form>
+  <br />
+</div>

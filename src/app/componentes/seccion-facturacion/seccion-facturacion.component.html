@@ -1,0 +1,119 @@
+<div class="container mt-3" style="background-color: #e9f1fe">
+  <br />
+  <h2 align="center">Registrar Pago</h2>
+  <br />
+  <form action="/action_page.php" [formGroup]="myform">  <!-- el formulario se llama myform-->
+    <div class="mb-3 mt-3">
+      <label for="valor_pago">Valor pago:</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Ingresar Valor Pago"
+        formControlName="valor_pago"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="fecha_pago">Fecha pago:</label>
+      <input
+        type="datetime"
+        class="form-control"
+        placeholder="Ingresar Fecha Pago"
+        formControlName="fecha_pago"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="estado">Estado:</label>
+      <input
+        type="name"
+        class="form-control"
+        placeholder="Ingresar Estado"
+        formControlName="estado"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="id_prestamo">Id prestamo:</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Ingresar Id Prestamo"
+        formControlName="id_prestamo"
+      />
+    </div>
+    <br />
+    <div class="d-grid gap-2 col-3 mx-auto">
+      <button (click)="insertarPago(myform.value)" class="btn btn-primary btn-lg" type="button">Registrar</button>
+    </div><br>
+    <div class="d-grid gap-2 col-3 mx-auto">
+      <button (click)="modificarPago(myform.value)" class="btn btn-primary btn-lg"
+      type="button">Editar</button>
+    </div>
+    <br>
+    <br>
+  </form>
+</div>
+<br />
+<br />
+<hr />
+<br />
+<br />
+
+<div class="container mt-3 table-responsive" style="background-color: #e9f1fe">
+  <br />
+  <br />
+  <div class="row">
+    <h2 class="col-lg-6">Consultar Pago</h2>
+    <div class="col-lg-4">
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Ingresar id pago"
+        formControlName="id_pago"
+      />
+    </div>
+    <div class="col-lg-2">
+      <button class="btn btn-primary btn-lg" type="button">Consultar</button>
+    </div>
+    <br />
+    <br />
+  </div>
+  <div class="container mt-3" style="background-color: #e9f1fe">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Id pago</th>
+          <th>Valor pago</th>
+          <th>Fecha pago</th>
+          <th>Estado</th>
+          <th>Id prestamo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pag of lista_pagos">
+          <td> {{pag.id_pago}} </td>
+          <td> {{pag.valor_pago}} </td>
+          <td> {{pag.fecha_pago}} </td>
+          <td> {{pag.estado}} </td>
+          <td> {{pag.id_prestamo}} </td>
+          <td>
+            <button
+            type="button"
+            class="btn btn-outline-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            (click)="seleccionarPago(pag)"
+          >
+            Seleccionar
+          </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-outline-danger"
+              (click)="eliminarPago(pag.id_pago)">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

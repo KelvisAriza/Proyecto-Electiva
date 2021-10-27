@@ -1,0 +1,207 @@
+<div class="container table-responsive" style="background-color: #e9f1fe">
+  <br />
+  <h2 align="center">Registrar Cliente</h2>
+  <br />
+  <form [formGroup]="myform">  <!-- el formulario se llama myform-->
+    <div>
+      <label for="tipo_documento">Tipo documento:</label>
+      <select class="form-select form-select-sm mt-3" formControlName="tipo_documento">
+        <option>Cedula Ciudadania</option>
+        <option>Pasaporte</option>
+        <option>Extranjero</option>
+      </select>
+    </div>
+    <br />
+    <div class="row">
+      <div class="mb-3 col-lg-6">
+        <label for="num_documento">Numero documento:</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Ingresar Numero Documento"
+          formControlName="num_documento"
+        />
+      </div>
+      <div class="mb-3 col-lg-6">
+        <label for="nombre_completo">Nombre completo:</label>
+        <input
+          type="name"
+          class="form-control"
+          placeholder="Ingresar Nombre Completo"
+          formControlName="nombre_completo"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="mb-3 col-lg-3">
+        <label for="phone">Telefono:</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Ingresar Numero Telefono"
+          formControlName="telefono"
+        />
+      </div>
+
+      <div class="mb-3 col-lg-3">
+        <label for="Direccion">Direccion:</label>
+        <input
+          type="name"
+          class="form-control"
+          placeholder="Ingresar Direccion"
+          formControlName="direccion"
+        />
+      </div>
+      <div class="mb-3 col-lg-6">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Ingresar Email"
+          formControlName="email"
+        />
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="tipo_contrato">Tipo contrato:</label>
+      <select class="form-select form-select-sm mt-3" height="40" formControlName="tipo_contrato">
+        <option>Seleccione tipo de contrato</option>
+        <option>Prestación de servicio</option>
+        <option>Indefinido</option>
+        <option>Anual</option>
+      </select>
+    </div>
+    <div class="row">
+      <div class="mb-3 col-lg-4">
+        <label for="Ocupacion">Ocupacion:</label>
+        <input
+          type="name"
+          class="form-control"
+          placeholder="Ingresar Ocupacion"
+          formControlName="ocupacion"
+        />
+      </div>
+      <div class="mb-3 col-lg-4">
+        <label for="antiguedad_laboral">Antiguedad laboral:</label>
+        <input
+          type="name"
+          class="form-control"
+          placeholder="Ingresar Antiguedad Laboral"
+          formControlName="antiguedad_laboral"
+        />
+      </div>
+      <div class="mb-3 col-lg-4">
+        <label for="ingreso_mensual">Ingresos mensual:</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Ingresar valor"
+          formControlName="ingreso_mensual"
+        />
+      </div>
+      <div>
+        <div class="mb-3">
+          <label for="tipo_documento">Tipo vivienda:</label>
+          <select class="form-select form-select-sm mt-3" formControlName="tipo_vivienda">
+            <option>Seleccione tipo de vivienda</option>
+            <option>Propia</option>
+            <option>Arrendada</option>
+            <option>Extranjera</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="d-grid gap-2 col-3 mx-auto">
+      <button (click)="insertarCliente(myform.value)" class="btn btn-primary btn-lg"
+        type="button">Registrar</button>
+    </div><br>
+    <div class="d-grid gap-2 col-3 mx-auto">
+      <button (click)="modificarCliente(myform.value)" class="btn btn-primary btn-lg"
+      type="button">Editar</button>
+    </div>
+    <br />
+  </form>
+</div>
+
+<br />
+<br />
+<hr />
+<br />
+<br />
+<div class="container table-responsive" style="background-color: #e9f1fe">
+  <br />
+  <br />
+  <div class="row">
+    <h2 class="col-lg-6">Consultar Cliente</h2>
+
+    <div class="col-lg-4">
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Ingresar Id Cliente"
+        formControlName="id_cliente"
+      />
+    </div>
+    <div class="col-lg-2">
+      <button class="btn btn-primary btn-lg" type="button">Consultar</button>
+    </div>
+    <br />
+    <br />
+  </div>
+  <br />
+  <br />
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <td>Id cliente</td>
+        <th>Tipo documento</th>
+        <th>Numero documento</th>
+        <th>Nombre completo</th>
+        <th>Telefono</th>
+        <th>Direccion</th>
+        <th>Email</th>
+        <th>Ocupacion</th>
+        <th>Tipo contrato</th>
+        <th>Antiguedad laboral</th>
+        <th>Tipo vivienda</th>
+        <th>Ingreso mensual</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cli of lista_clientes">
+        <td>{{cli.id_cliente}}</td>
+        <td>{{cli.tipo_documento}}</td>
+        <td>{{cli.num_documento}}</td>
+        <td>{{cli.nombre_completo}}</td>
+        <td>{{cli.telefono}}</td>
+        <td>{{cli.direccion}}</td>
+        <td>{{cli.email}}</td>
+        <td>{{cli.ocupacion}}</td>
+        <td>{{cli.tipo_contrato}}</td>
+        <td>{{cli.antiguedad_laboral}}</td>
+        <td>{{cli.tipo_vivienda}}</td>
+        <td>{{cli.ingreso_mensual}}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            (click)="seleccionarCliente(cli)"
+          >
+            Seleccionar
+          </button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-outline-danger"
+          (click)="eliminarCliente(cli.id_cliente)">
+          Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
