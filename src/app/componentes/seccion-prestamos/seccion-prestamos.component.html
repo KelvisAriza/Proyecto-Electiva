@@ -4,6 +4,15 @@
   <br />
   <form action="/action_page.php" [formGroup]="myform">  <!-- el formulario se llama myform-->
     <div class="mb-3 mt-3">
+      <label for="codigo_prestamo">Codigo prestamo:</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Ingresar Codigo Prestamo"
+        formControlName="codigo_prestamo"
+      />
+    </div>
+    <div class="mb-3 mt-3">
       <label for="valor_prestamo">Valor prestamo:</label>
       <input
         type="number"
@@ -73,17 +82,16 @@
         formControlName="estado"
       />
     </div>
-
-    <div class="mb-3">
-      <label for="id_cliente">Id cliente:</label>
-      <input
-        type="number"
-        class="form-control"
-        placeholder="Ingresar Id Cliente"
-        formControlName="id_cliente"
-      />
+    <div lines="full">
+      <label>Seleccionar Codigo Cliente</label>
+      <select formControlName="Id_cliente" placeholder="Select One">
+        <option *ngFor="let pre of lista_clientes" value="{{pre.Id_cliente}}">{{pre.codigo_cliente}}
+        </option>
+      </select>
     </div>
+
     <br />
+
     <div class="d-grid gap-2 col-3 mx-auto">
       <button (click)="insertarPrestamo(myform.value)" class="btn btn-primary btn-lg" type="button">Registrar</button>
     </div><br>
@@ -102,26 +110,11 @@
 <div class="container mt-3" style="background-color: #e9f1fe">
   <br />
   <br />
-  <div class="row">
-    <h2 class="col-lg-6">Consultar Prestamo</h2>
-    <div class="col-lg-4">
-      <input
-        type="number"
-        class="form-control"
-        placeholder="Ingresar id prestamo"
-        formControlName="id_prestamo"
-      />
-    </div>
-    <div class="col-lg-2">
-      <button class="btn btn-primary btn-lg" type="button">Consultar</button>
-    </div>
-    <br />
-    <br />
-  </div>
   <table class="table table-striped">
     <thead>
       <tr>
         <th>Id prestamo</th>
+        <th>Codigo prestamo</th>
         <th>Valor prestamo</th>
         <th>Numero cuotas</th>
         <th>Plazo meses</th>
@@ -136,6 +129,7 @@
     <tbody>
       <tr *ngFor="let pre of lista_prestamos">
         <td> {{pre.id_prestamo}} </td>
+        <td> {{pre.codigo_prestamo}} </td>
         <td> {{pre.valor_prestamo}} </td>
         <td> {{pre.num_cuotas}} </td>
         <td> {{pre.meses_plazo}} </td>
@@ -165,11 +159,13 @@
   </table>
   <br />
 </div>
+<!--
 <br />
 <br />
 <hr />
 <br />
 <br />
+
 <div class="container mt-3" style="background-color: #e9f1fe">
   <br />
   <br />
@@ -184,6 +180,7 @@
     <br />
     <br />
   </div>
+
   <form>
     <div class="mb-3 mt-3">
       <label for="valor_prestamo">Valor Prestamo:</label>
@@ -214,5 +211,7 @@
       />
     </div>
   </form>
+
   <br />
 </div>
+  -->

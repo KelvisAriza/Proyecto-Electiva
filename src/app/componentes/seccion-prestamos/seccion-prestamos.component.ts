@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PrestamoService } from 'src/app/servicios/prestamo.service';
+import { ClienteService } from 'src/app/servicios/cliente.service';
 import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
 @Component({
   selector: 'app-seccion-prestamos',
@@ -11,9 +12,10 @@ export class SeccionPrestamosComponent implements OnInit {
   myform:FormGroup
   id_editar:number=0;
 
-  constructor(private _builder:FormBuilder,private prestamo: PrestamoService) {
+  constructor(private _builder:FormBuilder,private prestamo: PrestamoService, private cliente: ClienteService) {
 
     this.myform=this._builder.group({
+      codigo_prestamo: ['', [Validators.required]],
       valor_prestamo: ['', [Validators.required]],
       num_cuotas: ['', [Validators.required]],
       meses_plazo: ['', [Validators.required]],
@@ -27,8 +29,10 @@ export class SeccionPrestamosComponent implements OnInit {
   }
 
   lista_prestamos: any;
+  lista_clientes: any;
   nuevopre={
 
+    codigo_prestamo:null,
     valor_prestamo:null,
     num_cuotas:null,
     meses_plazo:null,
@@ -43,6 +47,7 @@ export class SeccionPrestamosComponent implements OnInit {
 ////// cuando carga el componente se activa ngonInit y llama el metodo  recuperartodosPrestamos
   ngOnInit(): void {
     this.recuperarTodosCredito();
+    this.recuperarTodosCliente();
   }
 
   /// este metodo llama al servicio que se llama recuperar todo que tiene la
@@ -51,11 +56,16 @@ export class SeccionPrestamosComponent implements OnInit {
     this.prestamo.recuperarTodosCredito().subscribe(result => this.lista_prestamos = result);
   }
 
+  recuperarTodosCliente() {
+    this.cliente.recuperarTodosCliente().subscribe(result => this.lista_clientes = result);
+  }
+
   //este metodo carga los datos del formulario y llama al servicio con metodo insertarPrestamo
   // que tiene la ruta de agregar  insertarCliente=add_credito
   insertarPrestamo(value:any) {
     this.nuevopre={
 
+      codigo_prestamo:value.codigo_prestamo,
       valor_prestamo:value.valor_prestamo,
       num_cuotas:value.num_cuotas,
       meses_plazo:value.meses_plazo,
@@ -92,6 +102,7 @@ export class SeccionPrestamosComponent implements OnInit {
   // llama el metodo eliminarPrestamo del servicio  modificarPrestamo=update_prestamo/<id_prestamo>
   modificarCredito(value:any) {
     this.nuevopre={
+      codigo_prestamo:value.codigo_prestamo,
       valor_prestamo:value.valor_prestamo,
       num_cuotas:value.num_cuotas,
       meses_plazo:value.meses_plazo,
@@ -115,6 +126,7 @@ export class SeccionPrestamosComponent implements OnInit {
     this.id_editar=pre_edi['id_prestamo'];
     this.myform.setValue({
 
+      codigo_prestamo:pre_edi['codigo_prestamo'],
       valor_prestamo:pre_edi['valor_prestamo'],
       num_cuotas:pre_edi['num_cuotas'],
       meses_plazo:pre_edi['meses_plazo'],
@@ -126,5 +138,7 @@ export class SeccionPrestamosComponent implements OnInit {
       id_cliente:pre_edi['id_cliente']
     })
   }
+
+
 
 }

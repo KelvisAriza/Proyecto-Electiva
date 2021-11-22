@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PagoService } from 'src/app/servicios/pago.service';
+import { PrestamoService } from 'src/app/servicios/prestamo.service';
 import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
 @Component({
   selector: 'app-seccion-facturacion',
@@ -11,9 +12,10 @@ export class SeccionFacturacionComponent implements OnInit {
   myform:FormGroup
   id_editar:number=0;
 
-  constructor(private _builder:FormBuilder,private pago: PagoService) {
+  constructor(private _builder:FormBuilder,private pago: PagoService, private prestamo: PrestamoService) {
 
     this.myform=this._builder.group({
+      codigo_pago: ['', [Validators.required, Validators.maxLength(50)]]  ,
       valor_pago: ['', [Validators.required, Validators.maxLength(50)]]  ,
       fecha_pago: ['', [Validators.required]]  ,
       estado: ['', [Validators.required, Validators.maxLength(100)]],
@@ -23,8 +25,10 @@ export class SeccionFacturacionComponent implements OnInit {
   }
 
   lista_pagos: any;
+  lista_prestamo: any;
   nuevopag={
 
+    codigo_pago:null,
     valor_pago:null,
     fecha_pago:null,
     estado:null,
@@ -34,6 +38,7 @@ export class SeccionFacturacionComponent implements OnInit {
 ////// cuando carga el componente se activa ngonInit y llama el metodo  recuperartodosPago
   ngOnInit(): void {
     this.recuperarTodosPago();
+    this.recuperarTodosPrestamo();
   }
 
   /// este metodo llama al servicio que se llama recuperar todo que tiene la
@@ -42,15 +47,20 @@ export class SeccionFacturacionComponent implements OnInit {
     this.pago.recuperarTodosPago().subscribe(result => this.lista_pagos = result);
   }
 
+  recuperarTodosPrestamo() {
+    this.prestamo.recuperarTodosCredito().subscribe(result => this.lista_prestamo = result);
+  }
+
   //este metodo carga los datos del formulario y llama al servicio con metodo insertarPago
   // que tiene la ruta de agregar  insertarPago=add_pago
   insertarPago(value:any) {
     this.nuevopag={
 
-    valor_pago:value.valor_pago,
-    fecha_pago:value.fecha_pago,
-    estado:value.estado,
-    id_prestamo:value.id_prestamo
+      codigo_pago:value.codigo_pago,
+      valor_pago:value.valor_pago,
+      fecha_pago:value.fecha_pago,
+      estado:value.estado,
+      id_prestamo:value.id_prestamo
     }
     this.pago.insertarPago(this.nuevopag).subscribe(datos => {
       console.log(datos)
@@ -77,10 +87,11 @@ export class SeccionFacturacionComponent implements OnInit {
   // llama el metodo eliminarPago del servicio  modificarPago=update_pagos/<id_pago>
   modificarPago(value:any) {
     this.nuevopag={
-    valor_pago:value.valor_pago,
-    fecha_pago:value.fecha_pago,
-    estado:value.estado,
-    id_prestamo:value.id_prestamo
+      codigo_pago:value.codigo_pago,
+      valor_pago:value.valor_pago,
+      fecha_pago:value.fecha_pago,
+      estado:value.estado,
+      id_prestamo:value.id_prestamo
     }
     this.pago.modificarPago(this.nuevopag,this.id_editar).subscribe(datos => {
       console.log(datos)
@@ -95,6 +106,7 @@ export class SeccionFacturacionComponent implements OnInit {
     this.id_editar=pag_edi['id_pago'];
     this.myform.setValue({
 
+      codigo_pago:pag_edi['codigo_pago'],
       valor_pago:pag_edi['valor_pago'],
       fecha_pago:pag_edi['fecha_pago'],
       estado:pag_edi['estado'],
